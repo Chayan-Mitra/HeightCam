@@ -75,7 +75,7 @@ while cam.isOpened():
         except IndexError:
             pass
 
-    cv2.imshow('Landmark Tracker', frame)
+    cv2.imshow('HeightCam', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
