@@ -38,8 +38,8 @@ while cam.isOpened():
 
             l_hip_x_tracer = landmarks[pose.PoseLandmark.LEFT_HIP].x * w
             l_hip_y_tracer = landmarks[pose.PoseLandmark.LEFT_HIP].y * h
-            l_hip_x = int(l_shoulder_x_tracer)
-            l_hip_y = int(l_shoulder_y_tracer)
+            l_hip_x = int(l_hip_x_tracer)
+            l_hip_y = int(l_hip_y_tracer)
             l_hip = np.array([l_hip_x_tracer, l_hip_y_tracer])
 
             r_hip_x_tracer = landmarks[pose.PoseLandmark.RIGHT_HIP].x * w
@@ -51,23 +51,26 @@ while cam.isOpened():
 
             mid_shoulder = (l_shoulder + r_shoulder) / 2.0
             mid_hip = (l_hip + r_hip) / 2.0
-
             shoulder_to_hip_distance = np.linalg.norm(mid_shoulder - mid_hip)
-
+        
             t_shoulder = (int(mid_shoulder[0]) , int(mid_shoulder[1]))
             t_hip = (int(mid_hip[0]), int(mid_hip[1]))
 
+            cv2.circle(frame, (t_shoulder[0], t_shoulder[1]), 8, (0,200,255), -1)
+            cv2.circle(frame, (t_hip[0], t_hip[1]), 8, (0,200,255), -1)
             cv2.circle(frame, (l_shoulder_x, l_shoulder_y), 8, (0, 255, 0), -1)
             cv2.circle(frame, (r_shoulder_x, r_shoulder_y), 8, (0, 255, 0), -1)
             cv2.circle(frame, (l_hip_x, l_hip_y), 8, (0,0,255), -1)
             cv2.circle(frame, (r_hip_x, r_hip_y), 8, (0,0,255), -1)
-
+            
             ht_str = f"Approx Height : {shoulder_to_hip_distance:.1f} px"
             str_position = (t_shoulder[0] + 15, t_shoulder[1] + 15)
-            cv2.putText(frame, ht_str, str_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+            cv2.putText(frame, ht_str, str_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 100, 255), 2)
             cv2.line(frame, (l_shoulder_x, l_shoulder_y), (r_shoulder_x, r_shoulder_y), (255,255,0), 2)
             cv2.line(frame, (l_hip_x, l_hip_y), (r_hip_x, r_hip_y), (255,255,0), 2)
-
+            cv2.line(frame, (t_shoulder[0], t_shoulder[1]), (t_hip[0], t_hip[1]), (255,255,0), 2)
+            cv2.line(frame, (l_shoulder_x, l_shoulder_y), (l_hip_x, l_hip_y), (255,255,0), 1)
+            cv2.line(frame, (r_shoulder_x, r_shoulder_y), (r_hip_x, r_hip_y), (255,255,0), 1)
 
         except IndexError:
             pass
