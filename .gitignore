@@ -1,0 +1,20 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local environments (where your pip libraries live)
+.venv/
+venv/
+env/
+ENV/
+
+# System specific junk files
+.DS_Store
+Thumbs.db
+
+# IDE specific configurations
+.vscode/
+.idea/
