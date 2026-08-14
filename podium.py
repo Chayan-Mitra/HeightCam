@@ -6,7 +6,7 @@ pose = visuals.solutions.pose
 marker = visuals.solutions.drawing_utils
 pose_detect = pose.Pose(
     static_image_mode = False,
-    model_complexity=1,
+    model_complexity=2,
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5)
 
@@ -21,7 +21,8 @@ while cam.isOpened():
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose_detect.process(rgb_frame)
 
-    if results.pose_landmarks :
+    if results.pose_world_landmarks :
+        world_landmarks = results.pose_world_landmarks.landmark
         landmarks = results.pose_landmarks.landmark
         try :
             l_shoulder_x_tracer = landmarks[pose.PoseLandmark.LEFT_SHOULDER].x * w
