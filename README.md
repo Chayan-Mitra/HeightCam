@@ -1,4 +1,4 @@
-# 🚀 Smart Gated Skeletal Tracking AI
+# 🚀 Podium Height Estimation AI
 
 A high-precision, power-optimized computer vision pipeline built with **OpenCV** and **MediaPipe**. This project leverages a modular architecture to provide real-time anatomical height detection for digital podiums while minimizing computational overhead through an intelligent face-gated standby system.
 
