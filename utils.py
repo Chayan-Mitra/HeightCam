@@ -2,7 +2,7 @@ import cv2
 
 class FaceGateWay:
     def __init__(self):
-        cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+        cascade_path = 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cascade_path)
 
         if self.face_cascade.empty():
@@ -10,6 +10,7 @@ class FaceGateWay:
 
     def person_is_present(self, frame_bgr) -> bool:
         gray = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2GRAY)
+        gray = cv2.equalizeHist(gray)
 
         faces = self.face_cascade.detectMultiScale(
             gray,
