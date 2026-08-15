@@ -1,59 +1,65 @@
-# 🚀 Podium Height Estimation AI
+# 🚀 Smart Gated Skeletal Tracking AI
 
-A high-precision computer vision pipeline built with **OpenCV** and **MediaPipe Pose** to dynamically measure anatomical joint structures and track human height metrics in real-time.
-
-Designed specifically to eliminate perspective distortion and posture changes on stages and podium setups.
+A high-precision, power-optimized computer vision pipeline built with **OpenCV** and **MediaPipe**. This project leverages a modular architecture to provide real-time anatomical height detection for digital podiums while minimizing computational overhead through an intelligent face-gated standby system.
 
 ---
 
 ## 🔥 Key Features
 
-* **Anatomical Vector Summing** – Tracks true body segment lengths instead of inaccurate 2D bounding boxes.
-* **Torso Stability Vector** – Automatically computes mid-shoulder to mid-hip spatial geometry to maintain tracking stability even if a speaker turns sideways.
-* **Jitter-Resistant** – Leverages high-confidence tracking thresholds to filter out background edge noise.
-* **Subpixel Precision** – Converts normalized MediaPipe topology into raw pixel coordinate spaces seamlessly.
+*   **⚡ Face-Gated Activation**: Uses an ultra-lightweight **Haar Cascade** pass to scan for human presence. The heavy 3D skeletal tracking engine only initializes when a face is detected, significantly reducing idle CPU/GPU usage.
+*   **📐 Precision Skeletal Metrics**: Employs MediaPipe's **3D World Landmarks** to calculate anatomical segment lengths (Torso, Thigh, Shin) in real-world centimeters, completely independent of camera perspective.
+*   **🏗️ Modular Architecture**: Cleanly separated logic with a dedicated `utils.py` gateway module for face detection, making the codebase scalable and professional.
+*   **🏟️ Optimized for Podiums**: Specifically engineered to handle typical podium occlusions by prioritizing upper-body structural vectors.
 
 ---
 
-## 🛠️ Project Architecture
+## 🛠️ Project Structure
 
-[Project Folder]
- ├── podium.py          # Main real-time tracking application script
- ├── requirements.txt   # Core Python library dependencies
- └── README.md          # Project documentation
+```text
+├── podium.py                      # Main application & pose estimation engine
+├── utils.py                       # Modular FaceGateway using Haar Cascades
+├── haarcascade_frontalface.xml    # Pre-trained Haar Cascade model
+├── requirements.txt               # Project dependencies
+└── README.md                      # Documentation
+```
 
 ---
 
-## 💻 Getting Started
+## 💻 Tech Stack
 
-### 1. Clone the Repository
-git clone https://github.com
-cd YOUR_REPO_NAME
+*   **Language**: Python 3.8+
+*   **Computer Vision**: OpenCV, MediaPipe
+*   **Math**: NumPy
+*   **Models**: Haar Cascade (Face), BlazePose GHUM 3D (Skeletal)
 
-### 2. Install Dependencies
-pip install -r requirements.txt
+---
 
-### 3. Launch the AI
+## 🚀 Getting Started
+
+### 1. Installation
+Ensure you have the required libraries installed:
+```bash
+pip install opencv-python mediapipe numpy
+```
+
+### 2. Usage
+Simply run the main script to initialize the system in standby mode:
+```bash
 python podium.py
+```
+*   **Standby Mode**: The system will display "STANDBY" and run a low-power face scan.
+*   **Active Mode**: Upon detecting a face, the full 3D skeletal tracking will engage, displaying real-time metrics and anatomical vectors.
 
 ---
 
-## ⚙️ How It Works Under the Hood
+## ⚙️ How It Works
 
-1. **Frame Capture**: Pulls live frames from the stage camera using cv2.VideoCapture().
-2. **Pose Processing**: MediaPipe maps 33 high-accuracy 3D physiological landmarks.
-3. **Vector Math**: Computes structural Euclidean distance lines across targeted joints using NumPy calculations: Distance = SquareRoot( (x2 - x1)^2 + (y2 - y1)^2 )
-4. **Live Overlay**: Projects real-time metrics and coordinate lines on screen using anti-aliased drawing arrays.
-
----
-
-## 📝 Dependencies
-
-* **Python 3.8+**
-* **OpenCV-Python**
-* **MediaPipe**
-* **NumPy**
+1.  **Gating Phase**: `FaceGateway` in `utils.py` performs a rapid grayscale pass using `detectMultiScale` to establish a facial boundary.
+2.  **Tracking Phase**: Once gated, the system processes frames through MediaPipe's 3D Pose engine to extract metrics.
+3.  **Vector Calculation**: Uses **Euclidean Distance** to compute structural segments across targeted joints:
+    $$Distance = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+4.  **UI Overlay**: Renders real-time telemetry and anti-aliased tracking lines directly onto the video feed.
 
 ---
 
-💡 *Developed to bring pinpoint metric accuracy to real-world live broadcast staging environments.*
+💡 *Developed as a high-performance solution for accurate height analysis in live broadcast and podium environments.*
