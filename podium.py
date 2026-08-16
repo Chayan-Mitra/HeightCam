@@ -76,8 +76,8 @@ def main():
                 r_ankel_3D = np.array([world_landmarks[pose.PoseLandmark.RIGHT_ANKLE].x, world_landmarks[pose.PoseLandmark.RIGHT_ANKLE].y, world_landmarks[pose.PoseLandmark.RIGHT_ANKLE].z])
                 r_ankel_x_tracer = landmarks[pose.PoseLandmark.RIGHT_ANKLE].x * w
                 r_ankel_y_tracer = landmarks[pose.PoseLandmark.RIGHT_ANKLE].y * h
-                r_ankel_x = int(r_knee_x_tracer)
-                r_ankel_y = int(r_knee_y_tracer)
+                r_ankel_x = int(r_ankel_x_tracer)
+                r_ankel_y = int(r_ankel_y_tracer)
                 r_ankel = np.array([r_ankel_x, r_ankel_y])
 
                 l_ankel_3D = np.array([world_landmarks[pose.PoseLandmark.LEFT_ANKLE].x, world_landmarks[pose.PoseLandmark.LEFT_ANKLE].y, world_landmarks[pose.PoseLandmark.LEFT_ANKLE].z])
@@ -107,7 +107,7 @@ def main():
                 mid_knee = (l_knee + r_knee) / 2.0
                 mid_ankel = (l_ankel + r_ankel) / 2.0
                 shoulder_to_hip_2D_overlay = np.linalg.norm(mid_shoulder - mid_hip)
-                hip_to_knee_2D_overlay = np.linalg.norm(mid_hip - mid_ankel)
+                hip_to_knee_2D_overlay = np.linalg.norm(mid_hip - mid_knee)
                 knee_to_ankel_2D_overlay = np.linalg.norm(mid_knee - mid_ankel)
                 t_shoulder = (int(mid_shoulder[0]) , int(mid_shoulder[1]))
                 t_hip = (int(mid_hip[0]), int(mid_hip[1]))
@@ -135,7 +135,7 @@ def main():
                 cv2.line(frame, (r_shoulder_x, r_shoulder_y), (r_hip_x, r_hip_y), (255,255,0), 1)
                 cv2.line(frame, (r_hip_x, r_hip_y), (r_knee_x, r_knee_y), (255,255,0), 2)
                 cv2.line(frame, (l_hip_x, l_hip_y), (l_knee_x, l_knee_y), (255,255,0), 2)
-                cv2.line(frame, (r_knee_x, r_knee_y), (r_ankel_y, r_ankel_y), (255,255,0), 2)
+                cv2.line(frame, (r_knee_x, r_knee_y), (r_ankel_x, r_ankel_y), (255,255,0), 2)
                 cv2.line(frame, (l_knee_x, l_knee_y), (l_ankel_x, l_ankel_y), (255,255,0), 2)
                 cv2.putText(frame, cm_str, (30,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,100,255), 2)
 
